@@ -1,0 +1,71 @@
+
+{% include "headers/header.html" %}
+
+<body>
+    <h1 style="text-align: center; 
+    color: white; background-color: black;
+    font-family: 'Myriad Pro';
+    font-weight: 100;
+    font-size: 35px;
+    letter-spacing: 8px;" 
+    class="jumbotron">PERFORMACE BENCHMARK METRICS</h1>
+    <div class="row">
+        <div class="col-sm-4" style="padding-left: 16px;">
+            <h3 style="padding-left: 26px; text-transform: uppercase; font-size: 22px;">Fill the values to output the graph.</h3>
+            <div id="alertStatus" style="margin-left: 25px; margin-top: 15px;" class="alert alert-info col-sm-8" role="alert">
+                Execution Time for Local & VM 
+            </div>
+            <form style="margin-left: 25px;">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Local Execution Time</label>
+                  <input type="text" class="form-control col-sm-8" id="localTime" placeholder="15.66">
+                  <small id="ittrHelp" class="form-text text-muted">We'll create a dynamic graph out of it.</small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">VM Execution Time</label>
+                    <input type="text" class="form-control col-sm-8" id="vmTime" placeholder="07.35">
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <p>Choose the graph Layout</p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="r1" value="bar">
+                    <label class="form-check-label" for="inlineRadio1">Bar</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="r2" value="pie">
+                    <label class="form-check-label" for="inlineRadio2">Pie</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="r3" value="doughnut">
+                    <label class="form-check-label" for="inlineRadio3">Doughnut</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="r4" value="line">
+                    <label class="form-check-label" for="inlineRadio3">Line</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="r5" value="line">
+                    <label class="form-check-label" for="inlineRadio3">Radar</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="r6" value="line">
+                    <label class="form-check-label" for="inlineRadio3">Polar Area</label>
+                </div>
+                <br><br>
+                <button type="submit" id="btnSubmit" onclick="drawGraph(event)" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3">
+            <canvas id="localChart" width="400" height="400"></canvas>
+        </div>
+        <div class="col-sm-3">
+            <canvas id="vmChart" width="400" height="400"></canvas>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+    
+    {% include "footer/footer.html" %}
+
+</body>
+</html>

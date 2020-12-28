@@ -1,0 +1,306 @@
+
+<!-- Footer -->
+<footer class="bg-light text-center text-lg-start">
+    <!-- Grid container -->
+    <div class="container p-4">
+    <!--Grid row-->
+    <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Footer Content</h5>
+
+        <p>
+            Performance Benchmark Analysis on Python Flask API.
+        </p>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Links</h5>
+
+        <ul class="list-unstyled mb-0">
+            <li>
+            <a href="https://flask.palletsprojects.com/en/1.1.x/" class="text-dark">Flask</a>
+            </li>
+            <li>
+            <a href="https://getbootstrap.com/docs/4.0/getting-started/introduction/" class="text-dark">Bootstrap 4</a>
+            </li>
+            <li>
+            <a href="https://flask.palletsprojects.com/en/1.1.x/templating/" class="text-dark">Jinja Templates</a>
+            </li>
+            <li>
+            <a href="https://www.tutorialspoint.com/machine_learning_with_python/machine_learning_with_python_classification_algorithms_logistic_regression.htm#:~:text=Logistic%20regression%20is%20a%20supervised,be%20only%20two%20possible%20classes.&text=Mathematically%2C%20a%20logistic%20regression%20model,as%20a%20function%20of%20X." class="text-dark">Regression Model</a>
+            </li>
+        </ul>
+        </div>
+        <!--Grid column-->
+    </div>
+    <!--Grid row-->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    © 2020 Copyright:
+    <a class="text-dark" href="https://github.com/anonymousCoder-047">AnonymousCoder-047</a>
+    </div>
+    <!-- Copyright -->
+    <script>
+
+        function drawGraph(event) {
+            drawLocalGraph(event);
+            drawVMGraph(event);
+        }
+
+        function get_local_Val() {
+            let statusDisplay = document.getElementById('alertStatus');
+            let localTime = document.getElementById('localTime').value;
+            let values = localTime.split(',');
+            if( localTime == '0' ) {
+                statusDisplay.classList.toggle('alert-danger');
+                statusDisplay.innerHTML = "Please Enter Valid Values";
+                setTimeout(() => {
+                    statusDisplay.classList.remove('alert-danger');
+                    statusDisplay.innerHTML = "Please Enter Valid Values";
+                }, 2500);
+            } else {
+                return values;
+            }
+        }
+
+        function get_vm_Val() {
+            let statusDisplay = document.getElementById('alertStatus');
+            let vmTime = document.getElementById('vmTime').value;
+            let values = vmTime.split(',');
+            if( vmTime == '0' ) {
+                statusDisplay.classList.toggle('alert-danger');
+                statusDisplay.innerHTML = "Please Enter Valid Values";
+                setTimeout(() => {
+                    statusDisplay.classList.remove('alert-danger');
+                    statusDisplay.innerHTML = "Please Enter Valid Values";
+                }, 2500);
+            } else {
+                return values;
+            }
+        }
+
+        function drawLocalGraph(event) {
+            event.preventDefault();
+            let graph_type = get_graph_type();
+            let localTime = get_local_Val();
+            let lables = get_lable(localTime);
+            console.log(localTime);
+            let emailHelp = document.getElementById('emailHelp');
+            let statusDisplay = document.getElementById('alertStatus');
+            if( localTime == 0 ) {
+                statusDisplay.classList.toggle('alert-danger');
+                statusDisplay.innerHTML = "Please Enter coma seperated values";
+                setTimeout(() => {
+                    statusDisplay.classList.remove('alert-danger');
+                    statusDisplay.innerHTML = "Please Enter coma seperated values";
+                }, 2500);
+            } else {
+                emailHelp.innerHTML = `Please Enter ${localTime} coma seperated values`;
+                var ctx = document.getElementById('localChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: graph_type,
+                    data: {
+                        datasets: [{
+                            label: 'Local Machine',
+                            data: localTime,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    display: true,
+                                    beginAtZero: true,
+                                    labelString: 'Source'
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    display: true,
+                                    beginAtZero: true,
+                                    labelString: 'Time'
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                fontColor: 'black'
+                            }
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function(tooltipItem, data) {
+                                    var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+        }
+
+        function drawVMGraph(event) {
+            event.preventDefault();
+            let graph_type = get_graph_type();
+            let vmTime = get_vm_Val();
+            let lables = get_lable(vmTime);
+            console.log(vmTime);
+            let emailHelp = document.getElementById('emailHelp');
+            let statusDisplay = document.getElementById('alertStatus');
+            if( vmTime == '' ) {
+                statusDisplay.classList.toggle('alert-danger');
+                statusDisplay.innerHTML = "Please Enter coma seperated values";
+                setTimeout(() => {
+                    statusDisplay.classList.remove('alert-danger');
+                    statusDisplay.innerHTML = "Please Enter coma seperated values";
+                }, 2500);
+            } else {
+                emailHelp.innerHTML = `Please Enter ${vmTime} coma seperated values`;
+                var ctx = document.getElementById('vmChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: graph_type,
+                    data: {
+                        datasets: [{
+                            label: 'Virtual Machine',
+                            data: vmTime,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    display: true,
+                                    beginAtZero: true,
+                                    min: 0,
+                                    max: 100,
+                                    stepSize: 20,
+                                    labelString: 'Source'
+                                },
+                                scaleLable: {
+                                    display: true,
+                                    labelString: 'Source'
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    display: true,
+                                    beginAtZero: true,
+                                    labelString: 'Time'
+                                },
+                                scaleLable: {
+                                    display: true,
+                                    labelString: 'Time'
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                fontColor: 'black'
+                            }
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function(tooltipItem, data) {
+                                    var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+        }
+
+        function get_graph_type() {
+            let bar = document.getElementById('r1');
+            let pie = document.getElementById('r2');
+            let doughnut = document.getElementById('r3');
+            let line = document.getElementById('r4');
+            let radar = document.getElementById('r5');
+            let polar_area = document.getElementById('r6');
+            if( line.checked ) {
+                return graph_type = 'line';
+            } else if( pie.checked ) {
+                return graph_type = 'pie';
+            } else if( doughnut.checked ) {
+                return graph_type = 'doughnut';
+            } else if( radar.checked ) {
+                return graph_type = 'radar';
+            } else if( polar_area.checked ) {
+                return graph_type = 'polarArea';
+            } else {
+                return graph_type = 'bar'
+            }
+        }
+
+        function get_lable(timeArray) {
+            let labels = [];
+            timeArray.forEach((time, i) => {
+                let lbl = 'Execution '+i;
+                labels.push(lbl);
+            });
+
+            return labels;
+        }
+    </script>
+</footer>
+<!-- Footer -->
