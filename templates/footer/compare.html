@@ -48,9 +48,8 @@
     <!-- Copyright -->
     <script>
 
-        function drawGraph(event) {
-            drawLocalGraph(event);
-            drawVMGraph(event);
+        function compareGraph(event) {
+            drawGraph(event);
         }
 
         function get_local_Val() {
@@ -85,10 +84,11 @@
             }
         }
 
-        function drawLocalGraph(event) {
+        function drawGraph(event) {
             event.preventDefault();
             let graph_type = get_graph_type();
             let localTime = get_local_Val();
+            let vmTime = get_vm_Val();
             let lables = get_lable(localTime);
             let emailHelp = document.getElementById('emailHelp');
             let statusDisplay = document.getElementById('alertStatus');
@@ -101,7 +101,7 @@
                 }, 2500);
             } else {
                 emailHelp.innerHTML = `Please Enter ${localTime} coma seperated values`;
-                var ctx = document.getElementById('localChart').getContext('2d');
+                var ctx = document.getElementById('compareChart').getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: graph_type,
                     data: {
@@ -126,83 +126,17 @@
                                 'rgba(255, 159, 64, 1)'
                             ],
                             borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            xAxes: [{
-                                ticks: {
-                                    display: true,
-                                    beginAtZero: true,
-                                    labelString: 'Source'
-                                }
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    display: true,
-                                    beginAtZero: true,
-                                    labelString: 'Time'
-                                }
-                            }]
                         },
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            labels: {
-                                fontColor: 'black'
-                            }
-                        },
-                        tooltips: {
-                            callbacks: {
-                                label: function(tooltipItem, data) {
-                                    var label = data.datasets[tooltipItem.datasetIndex].label || '';
-                
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    label += Math.round(tooltipItem.yLabel * 100) / 100;
-                                    return label;
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-            
-        }
-
-        function drawVMGraph(event) {
-            event.preventDefault();
-            let graph_type = get_graph_type();
-            let vmTime = get_vm_Val();
-            let lables = get_lable(vmTime);
-            let emailHelp = document.getElementById('emailHelp');
-            let statusDisplay = document.getElementById('alertStatus');
-            if( vmTime == '' ) {
-                statusDisplay.classList.toggle('alert-danger');
-                statusDisplay.innerHTML = "Please Enter coma seperated values";
-                setTimeout(() => {
-                    statusDisplay.classList.remove('alert-danger');
-                    statusDisplay.innerHTML = "Please Enter coma seperated values";
-                }, 2500);
-            } else {
-                emailHelp.innerHTML = `Please Enter ${vmTime} coma seperated values`;
-                var ctx = document.getElementById('vmChart').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: graph_type,
-                    data: {
-                        labels: lables,
-                        datasets: [{
+                        {
                             label: 'Virtual Machine',
                             data: vmTime,
                             backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
+                                'rgba(255, 99, 132, 0.8)',
+                                'rgba(54, 162, 235, 0.8)',
+                                'rgba(255, 206, 86, 0.8)',
+                                'rgba(75, 192, 192, 0.8)',
+                                'rgba(153, 102, 255, 0.8)',
+                                'rgba(255, 159, 64, 0.8)'
                             ],
                             borderColor: [
                                 'rgba(255, 99, 132, 1)',
@@ -222,13 +156,6 @@
                                 ticks: {
                                     display: true,
                                     beginAtZero: true,
-                                    min: 0,
-                                    max: 100,
-                                    stepSize: 20,
-                                    labelString: 'Source'
-                                },
-                                scaleLable: {
-                                    display: true,
                                     labelString: 'Source'
                                 }
                             }],
@@ -236,10 +163,6 @@
                                 ticks: {
                                     display: true,
                                     beginAtZero: true,
-                                    labelString: 'Time'
-                                },
-                                scaleLable: {
-                                    display: true,
                                     labelString: 'Time'
                                 }
                             }]
